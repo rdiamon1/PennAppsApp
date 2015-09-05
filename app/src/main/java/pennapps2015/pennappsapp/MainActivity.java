@@ -1,10 +1,7 @@
 package pennapps2015.pennappsapp;
 
 import android.content.Intent;
-<<<<<<< Updated upstream
-=======
 import android.net.Uri;
->>>>>>> Stashed changes
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view)
     {
-<<<<<<< Updated upstream
         Switch s = (Switch) view;
         final Intent drivingService = new Intent(this, DrivingText.class);
         if (s.isChecked())
@@ -47,12 +43,7 @@ public class MainActivity extends AppCompatActivity {
         {
             stopService(drivingService);
         }
-=======
         DrivingText dt = new DrivingText();
-        //dt.onBind(Intent intent);
-
-        //binds intent to service
->>>>>>> Stashed changes
 
     }
 
