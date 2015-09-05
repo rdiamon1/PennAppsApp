@@ -1,16 +1,20 @@
 package pennapps2015.pennappsapp;
 
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,6 +26,43 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    public void onClick(View view)
+    {
+        Switch s = (Switch) view;
+        final Intent drivingService = new Intent(this, DrivingText.class);
+        if (s.isChecked())
+        {
+            System.out.println("This switch is checked");
+
+            //binds intent to service
+            new Thread(new Runnable() {
+                public void run() {
+                    new Thread(new Runnable() {
+                        public void run() {
+                            startService(drivingService);
+                        }
+                    }).start();
+                }
+            }).start();
+        }
+        else
+        {
+            stopService(drivingService);
+        }
+        DrivingText dt = new DrivingText();
+
+    }
+
+    public void sendSMS(View v)
+    {
+        String number = "smsto12346556";  // digits are the number on which you want to send SMS
+        String smsText = "Sorry, I am currently unavailable"; //text of msg to be sent
+        Uri uri = Uri.parse(number);
+        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+        it.putExtra("sms_body", smsText);
+        startActivity(it);
     }
 
     @Override
