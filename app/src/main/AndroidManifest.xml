@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pennapps2015.pennappsapp" >
 
+<<<<<<< Updated upstream
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
+=======
+    <!--android.permission.SEND_SMS probably not needed-->
+    android.permission.ACCESS_FINE_LOCATION
+>>>>>>> Stashed changes
 
     <application
         android:allowBackup="true"
