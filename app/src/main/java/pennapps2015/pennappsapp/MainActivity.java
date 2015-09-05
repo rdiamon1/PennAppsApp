@@ -1,5 +1,6 @@
 package pennapps2015.pennappsapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,9 +21,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view)
     {
-        DrivingText dt = new DrivingText();
-        dt.onBind(Intent intent);
-        //binds intent to service
+        Switch s = (Switch) view;
+        final Intent drivingService = new Intent(this, DrivingText.class);
+        if (s.isChecked())
+        {
+            System.out.println("This switch is checked");
+
+            //binds intent to service
+            new Thread(new Runnable() {
+                public void run() {
+                    new Thread(new Runnable() {
+                        public void run() {
+                            startService(drivingService);
+                        }
+                    }).start();
+                }
+            }).start();
+        }
+        else
+        {
+            stopService(drivingService);
+        }
 
     }
 

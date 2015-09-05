@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.os.IBinder;
 
 public class DrivingText extends Service {
-    public DrivingText() {
+
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
+
+        return 0;
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO:
+        // TODO: Check for errors
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
