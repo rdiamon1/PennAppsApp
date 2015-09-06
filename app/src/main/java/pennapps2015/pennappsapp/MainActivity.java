@@ -28,13 +28,52 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         Switch s = (Switch) view;
         final Intent drivingService = new Intent(this, DrivingText.class);
-        if (s.isChecked())
-        {
+        if (s.isChecked()) {
             System.out.println("This switch is checked");
+
+
+            // Acquire a reference to the system Location Manager
+            LocationManager locationManager = (LocationManager) this
+                    .getSystemService(Context.LOCATION_SERVICE);
+
+            // Define a listener that responds to location updates
+            LocationListener locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    location.getLatitude();
+                    Toast.makeText(MainActivity.this, "Current speed:" + location.getSpeed(),
+                    Toast.LENGTH_SHORT).show();
+                    System.out.println("Current speed:" + location.getSpeed());
+                }
+
+                public void onStatusChanged(String provider, int status,
+                                            Bundle extras) {
+                }
+
+                public void onProviderEnabled(String provider) {
+                }
+
+                public void onProviderDisabled(String provider) {
+                }
+            };
+
+            locationListener.onLocationChanged(new Location(""));
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                    0, locationListener);
+
+
 
             //binds intent to service
             new Thread(new Runnable() {
@@ -46,17 +85,14 @@ public class MainActivity extends AppCompatActivity {
                     }).start();
                 }
             }).start();
-        }
-        else
-        {
+        } else {
             stopService(drivingService);
         }
         DrivingText dt = new DrivingText();
 
     }
 
-    public void sendSMS(View v)
-    {
+    public void sendSMS(View v) {
         String number = "smsto12346556";  // digits are the number on which you want to send SMS
         String smsText = "Sorry, I am currently unavailable"; //text of msg to be sent
         Uri uri = Uri.parse(number);
@@ -101,53 +137,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-
-        LocationManager locationManager = (LocationManager) this
-                .getSystemService(Context.LOCATION_SERVICE);
-
-        LocationListener locationListener = new LocationListener() {
-
-            @Override
-            public void onLocationChanged(Location location) {
-                //call fct.
-                Log.d("Tag", "in onLocationChanged");
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                Toast.makeText(MainActivity.this,
-                        "Provider Enabled: " + provider, Toast.LENGTH_SHORT)
-                        .show();
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Toast.makeText(MainActivity.this,
-                        "Provider Disabled: " + provider, Toast.LENGTH_SHORT)
-                        .show();
-            }
-        };
-        long minTime = 2 * 1000; //minimum time interval for update in seconds, i.e. 2 seconds
-        long minDistance = 1; //minimum distance interval for update in meters, i.e. 1 meters
-
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-            return true;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, locationListener);
-
-        return true;
-
+return false;
     }
+
     }
