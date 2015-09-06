@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onLocationChanged(Location location) {
                     location.getLatitude();
                     Toast.makeText(MainActivity.this, "Current speed:" + location.getSpeed(),
-                    Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();
                     System.out.println("Current speed:" + location.getSpeed());
                 }
 
@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
                     0, locationListener);
-
 
 
             //binds intent to service
@@ -105,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        //NEW
         Switch toggle = (Switch) findViewById(R.id.onSwitch);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -139,5 +136,4 @@ public class MainActivity extends AppCompatActivity {
 
 return false;
     }
-
     }
